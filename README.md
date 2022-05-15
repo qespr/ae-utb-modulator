@@ -43,7 +43,7 @@ FM:  PNPPPNPNPPPNPNPNPNPPPPPNPNPPPNPPPNPPPPPNPPPPPNPNPNPPPPPNPPPPPNPNPNPPPPPNPPP
 
 ### Bugs
 
-Zatím žádné známe, klidně nahlašujte, patchujte
+Zatím žádné známé, klidně nahlašujte, patchujte
 
 ## License
 

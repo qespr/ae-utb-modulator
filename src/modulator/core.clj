@@ -34,6 +34,10 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (let [text-bin (nu/text-to-bin (first args))]
+  (let [text-bin (nu/text-to-bin (first args))
+        text-fm (fm-encode text-bin)
+        text-mfm "nil"
+        text-rll1 "nil"
+        text-rll2 "nil"]
   (println "Text: " (first args))
-  (println "FM: " (fm-encode text-bin))))
+  (println "FM: " text-fm)))
