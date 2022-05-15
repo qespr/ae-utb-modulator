@@ -22,6 +22,13 @@
    "0010" "NNPNNPNN",
    "0011" "NNNNPNNN"})
 
+;;0 = PN if předtím 00
+;;0 = NN if předtím 10
+;;1 = NP
+(defn mfm-encode
+  "Zakóduje binární text pomocí MFM modulace"
+  ([bin-text] (mfm-encode (first bin-text) "0" (rest bin-text)))
+  ([bit prev tail]))
 
 (defn fm-encode
   "Zakóduje text pomocí FN modulace"
@@ -32,7 +39,7 @@
 
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Vstupní bod, bere 1 argument - text k modulaci"
   [& args]
   (let [text-bin (nu/text-to-bin (first args))
         text-fm (fm-encode text-bin)
