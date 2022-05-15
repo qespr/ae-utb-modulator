@@ -22,7 +22,18 @@
    "0010" "NNPNNPNN",
    "0011" "NNNNPNNN"})
 
+
+(defn fm-encode
+  "Zakóduje text pomocí FN modulace"
+  [bin-text]
+  (clojure.string/replace
+   (clojure.string/replace bin-text #"0" "PN")
+   #"1" "PP"))
+
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println "Hello, World!"))
+  (let [text-bin (nu/text-to-bin (first args))]
+  (println "Text: " (first args))
+  (println "FM: " (fm-encode text-bin))))
