@@ -6,6 +6,15 @@ vlastní.
 
 Online verze se připravuje ale asi vám ji hostovat nebudu
 
+- Postup kompletnosti
+  - [x] FM modulace
+  - [x] MFM modulace
+  - [ ] RLL1 modulace
+  - [ ] RLL2 modulace
+  - [ ] Pokrytí testy
+  - [ ] Základní možnosti výstupu (vyžádat si jen jednu konverzi)
+  - [ ] Zachycení chyb (filtrovat ěščřžýáíéóúů a všechno mimo ASCII znaky)
+
 ## Instalace
 
 1. Ze zdroje
