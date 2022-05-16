@@ -20,23 +20,16 @@ Online verze se připravuje ale asi vám ji hostovat nebudu
 1. Ze zdroje
    - Nainstalujte si nějakou javu
    - Nainstalujte si clojure
-   - Nainstalujte is leinegen
+   - Nainstalujte is leiningen
+   - Naklonujte si repo ``git clone git@github.com:qespr/ae-utb-modulator.git``
+   - Přejděte do složky ``cd ae-utb-modulator`` a spustit pomocí leiningen: ``lein run [váš text]``
 2. Předsestavené
-   - Jděte na stránku s vydanými verzemi
-   - Stáhněte si nejnovější
-   - Stačí vám java 8+
-   - Více info v užití
+   - Vydání bude sestaveno až tam budou ubě RLL verze
 3. Online verze (dobře to není úplně instalace)
    - Asi by to teoreticky šlo narvat do nějakého online interpreteru
    - Později to můžu zkusit podporovat
 4. Emacs
-   - Ano bude Elisp verze, pokud se na to nevyseru
-
-## Užití
-
-``$ java -jar modulator-0.1.0-standalone.jar [Text]``
-
-Tohle vám vyplivne váš text zakódovaný do veškerých podporovaných modulací
+   - Možná bude Elisp verze, pokud se na to nevyseru (pravděpodobně se na to vyseru)
 
 ## Možnosti
 
@@ -47,12 +40,14 @@ Zatím žádné
 ```
 $ java -jar modulator.jar Hello
 Text:  Hello
-FM:  PNPPPNPNPPPNPNPNPNPPPPPNPNPPPNPPPNPPPPPNPPPPPNPNPNPPPPPNPPPPPNPNPNPPPPPNPPPPPPPP
+  FM:  PNPPPNPNPPPNPNPNPNPPPPPNPNPPPNPPPNPPPPPNPPPPPNPNPNPPPPPNPPPPPNPNPNPPPPPNPPPPPPPP
+ MFM:  PNNPNNPNNPNNPNPNPNNPNPNNPNNPNNNPNNNPNPNNNPNPNNPNPNNPNPNNNPNPNNPNPNNPNPNNNPNPNPNP
 ```
 
 ### Bugs
 
-Zatím žádné známé, klidně nahlašujte, patchujte
+- Bug: Pokud vložíte něco mimo ASCII tak to vyplivne úplný bordel
+  - Řešení: Nedělejte to
 
 ## License
 
