@@ -1,8 +1,8 @@
 # AE Modulator
 
 Jde o program který provádí FM, MFM a RLL modulace dat tak jak je vyžadováno předmětem __Architektura Počítačů__. Moduluje
-jakýkoliv ASCII string a má na výběr z obou verzí RLL modulace. Při sestavování ze zdroje si jednodušše můžete definovat svou
-vlastní.
+jakýkoliv ASCII string a má na výběr z obou verzí RLL modulace. Při sestavování ze zdroje si jednoduše můžete definovat svou
+vlastní tabulku RLL.
 
 Online verze se připravuje ale asi vám ji hostovat nebudu
 
@@ -14,6 +14,7 @@ Online verze se připravuje ale asi vám ji hostovat nebudu
   - [ ] Pokrytí testy
   - [ ] Základní možnosti výstupu (vyžádat si jen jednu konverzi)
   - [ ] Zachycení chyb (filtrovat ěščřžýáíéóúů a všechno mimo ASCII znaky)
+  - [ ] Přepsat zdroják do angličtiny?
 
 ## Instalace
 

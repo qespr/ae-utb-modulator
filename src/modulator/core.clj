@@ -60,6 +60,7 @@
         text-mfm (mfm-encode text-bin)
         text-rll1 "nil"
         text-rll2 "nil"]
-  (println "Text: " (first args))
-  (println "  FM: " text-fm)
-  (println " MFM: " text-mfm)))
+    (println "Text: " (first args))
+    (println " Bin: " text-bin)
+    (println "  FM: " text-fm)
+    (println " MFM: " text-mfm)))
