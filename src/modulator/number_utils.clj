@@ -8,11 +8,9 @@
   ([cislo zbytek ret]
    (if (> cislo 0)
      (recur (quot cislo 2) (mod cislo 2) (str zbytek ret))
-     ;;Způsob jakým předáváem způsobuje že se bin čísla zapisují až v další
+     ;;Způsob jakým předáváme způsobuje že se bin čísla zapisují až v další
      ;;Iteraci, proto je potřeba provézt poslední zápis zde
      (str zbytek ret))))
- ;; todo: přepsat na test
-(do-binarky 16)
 
 (defn zarovnej-na-byte
   "Zarovná binární číslo na specifikovanou pevnou délku v bajtech"
