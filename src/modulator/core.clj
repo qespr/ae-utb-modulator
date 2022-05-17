@@ -25,32 +25,33 @@
 
 (defn- rll-match
   "Zjistí který segment se nachází jako další v binárním řetězci
-  Vrací délku segmentu aby jste si mohli udělat substring"
-  ;;Musíme si ještě udržovat kopii všech klíčů pro případ
-  ;;že by poslední sada nebyla tabulková hodnota
+  Vrací segment, takže si buď můžete udělat substring pomocí jeho délky;
+  nebo jej přímo použít pro lookup"
   ([klice bin-string] (rll-match klice klice bin-string))
-  ;;kk - klíč kopie, vždy předávat nezměněné
+  ;;obsahuje navíc kopii klíčů [kk] aby jsme mohli obnovit hledání po přidání nul
   ([klice kk bin-string]
-  ;;vyzkoušet match pro první first z klicu
-  ;;pokud ne tak recur s rest klicu
-  ;;Tady MUSÍ nejdřív být check jestli klíče nejsou nulové -> stane se když už netrefíme nic, v tom případě se musí přidávat nuly
+  ;;Je potřeba pohlídat jestli klíče nejsou nenenulové, pak se přidávají až dvě nuly
   (cond
     ;;pokud jsou klíče už prázdné - žádná kombinace se nenašla, musíme přidávat nuly;
-    ;;můžou se přidat max 2 nuly ale zkusíme to ignorovat a uvidíme jestli z toho bude někdy bug
+    ;;můžou se přidat max 2 nuly ale zde na to sereme, zatím to funguje
     (= klice '()) (recur kk kk (str bin-string "0"))
-    ;;Kombinace se našla - vracíme délku sady aby si volající funkce mohla ukrojit substring
     (cstr/starts-with? bin-string (first klice)) (first klice)
     :else (recur (rest klice) kk bin-string))))
 
-;;Todo: tohle taky nějak musí deketovat že došlo k doplnění
-;;      třeba tak že to vždy zkontroluje že segment není delší než zbývající string
+
 (defn rll-encode
   "Zakóduje binární string pomocí specifikované RLL tabulky"
   ([tabulka bin-string] (rll-encode tabulka bin-string nil))
-  ;;Tady se musí dávat bacha na to kddyž se nic nematchne
-  ([tabulka string-rest ret]))
-
-
+  ([tabulka string-rest ret]
+   (if (> (count string-rest) 0)
+     (let [mezi-klic (rll-match (keys tabulka) string-rest)]
+     (recur
+      tabulka
+      (if (< (count mezi-klic) (count string-rest))
+        (subs string-rest (count mezi-klic)) ;;Pokračuje v rekzurzi protože je pořád co převádět
+        "") ;;Ukončí rekurzy v dalším kole
+      (str ret (tabulka mezi-klic))))
+     ret)))
 
 ;;Komplet pravidla
 ;;0 = PN if předtím 00
@@ -84,12 +85,17 @@
 (defn -main
   "Vstupní bod, bere 1 argument - text k modulaci"
   [& args]
+  (when (= nil args)
+    (println "Použití: modulator [text k převedení]")
+    (System/exit 1))
   (let [text-bin (nu/text-to-bin (first args))
         text-fm (fm-encode text-bin)
         text-mfm (mfm-encode text-bin)
-        text-rll1 "nil"
-        text-rll2 "nil"]
+        text-rll1 (rll-encode RLL-1 text-bin)
+        text-rll2 (rll-encode RLL-2 text-bin)]
     (println "Text: " (first args))
-    (println " Bin: " text-bin)
-    (println "  FM: " text-fm)
-    (println " MFM: " text-mfm)))
+    (println "   Bin: " text-bin)
+    (println "    FM: " text-fm)
+    (println "   MFM: " text-mfm)
+    (println " RLL-1: " text-rll1)
+    (println " RLL-2: " text-rll2)))
