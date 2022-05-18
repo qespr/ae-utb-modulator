@@ -24,7 +24,6 @@
 
 (deftest encode-tests
   (testing "FM modulace"
-    ;;Moc jich není, mě se to nechce převádět ručně
     (is (= "PPPNPPPPPNPN" (fm-encode "101100")) "Ukázková FM"))
   (testing "MFM modulace"
     (is (= "NPNNNPNPNNPN" (mfm-encode "101100")) "Ukázková MFM"))

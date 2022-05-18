@@ -16,6 +16,7 @@ Online verze se připravuje ale asi vám ji hostovat nebudu
   - [ ] Zachycení chyb (filtrovat ěščřžýáíéóúů a všechno mimo ASCII znaky)
   - [ ] Reverzní převod?
   - [ ] Přepsat zdroják do angličtiny?
+  - [ ] Spočítat efektivitu každého převodu (počet pulzů na string)
 
 ## Instalace/použití
 
