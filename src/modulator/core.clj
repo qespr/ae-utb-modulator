@@ -38,7 +38,7 @@
     (cstr/starts-with? bin-string (first klice)) (first klice)
     :else (recur (rest klice) kk bin-string))))
 
-
+;;Todo: decode by mělo stačit vyhledávat podle hodnot místo podle klíčů
 (defn rll-encode
   "Zakóduje binární string pomocí specifikované RLL tabulky"
   ([tabulka bin-string] (rll-encode tabulka bin-string nil))

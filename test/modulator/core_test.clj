@@ -22,6 +22,7 @@
     (is (= "01001001010101110101010001000011010010010101001001000100" (text-to-bin "IWTCIRD")) "All caps text")
     (is (= "01100101011011010110000101100011011100110011010001100101011101100110010101110010" (text-to-bin "emacs4ever")) "Malá písmena + čísla")))
 
+;;Todo: Ještě chybí rll-match testy a ty jsou hodně důležité
 (deftest encode-tests
   (testing "FM modulace"
     (is (= "PPPNPPPPPNPN" (fm-encode "101100")) "Ukázková FM"))

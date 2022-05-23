@@ -4,7 +4,7 @@ Jde o program který provádí FM, MFM a RLL modulace dat tak jak je vyžadován
 jakýkoliv ASCII string a má na výběr z obou verzí RLL modulace. Při sestavování ze zdroje si jednoduše můžete definovat svou
 vlastní tabulku RLL.
 
-Online verze se připravuje ale asi vám ji hostovat nebudu
+Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github
 
 - Postup kompletnosti
   - [x] FM modulace
@@ -17,6 +17,7 @@ Online verze se připravuje ale asi vám ji hostovat nebudu
   - [ ] Reverzní převod?
   - [ ] Přepsat zdroják do angličtiny?
   - [ ] Spočítat efektivitu každého převodu (počet pulzů na string)
+  - [ ] Online verze
 
 ## Instalace/použití
 
