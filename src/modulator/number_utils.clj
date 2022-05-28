@@ -12,6 +12,15 @@
      ;;Iteraci, proto je potřeba provézt poslední zápis zde
      (str zbytek ret))))
 
+(defn zkrat-na-byte
+  "Při RLL modulaci se někdy string prodlužuje o bity které nejsou
+   součástí původní zprávy. Tato funkce je najde a odstraní"
+  [bin-msg]
+  ;;Todo: Přepsat na if-let?
+  (if (not= (mod (count bin-msg) 8) 0)
+    (subs bin-msg 0 (- (count bin-msg) (mod (count bin-msg) 8)))
+    bin-msg))
+
 (defn zarovnej-na-byte
   "Zarovná binární číslo na specifikovanou pevnou délku v bajtech"
   ([bin-str] (zarovnej-na-byte bin-str 1))
@@ -24,7 +33,6 @@
                    (count bin-str))
                   "0"))
         bin-str)))
-(zarovnej-na-byte "000") ;;todo: přepsat na test
 
 (defn znak-to-bin
   "Převede znak na jeho binární ASCII reprezentaci ve formě stringu"

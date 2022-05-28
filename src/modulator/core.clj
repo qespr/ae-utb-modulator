@@ -1,8 +1,10 @@
 (ns modulator.core
   (:require [modulator.number-utils :as nu]
-            [clojure.string :as cstr])
+            [clojure.string :as cstr]
+            [clojure.set])
   (:gen-class))
 
+;;Kódovací tabulky
 (def RLL-1
   "První verze RLL modulace jak je definováno v návodu na cvičení"
   {"00" "PNNN",
@@ -26,7 +28,7 @@
 (defn- rll-match
   "Zjistí který segment se nachází jako další v binárním řetězci
   Vrací segment, takže si buď můžete udělat substring pomocí jeho délky;
-  nebo jej přímo použít pro lookup"
+  nebo jej přímo použít pro lookup."
   ([klice bin-string] (rll-match klice klice bin-string))
   ;;obsahuje navíc kopii klíčů [kk] aby jsme mohli obnovit hledání po přidání nul
   ([klice kk bin-string]
@@ -38,7 +40,6 @@
     (cstr/starts-with? bin-string (first klice)) (first klice)
     :else (recur (rest klice) kk bin-string))))
 
-;;Todo: decode by mělo stačit vyhledávat podle hodnot místo podle klíčů
 (defn rll-encode
   "Zakóduje binární string pomocí specifikované RLL tabulky"
   ([tabulka bin-string] (rll-encode tabulka bin-string nil))
@@ -52,6 +53,40 @@
         "") ;;Ukončí rekurzy v dalším kole
       (str ret (tabulka mezi-klic))))
      ret)))
+
+(defn- rll-match-absolute
+  "Vrátí první klíč který odpovídá začátku daného stringu
+  Funguje jako rll-match ale string neprodlužuje o žádné znaky.
+  Pokud nenajde ždáný odpovídající klíč, vrací nil
+
+  K použíti s rll-decode"
+  [klice modul-string]
+  (cond
+  (= klice '()) nil
+  (cstr/starts-with? modul-string (first klice)) (first klice)
+  :else (recur (rest klice) modul-string)))
+(rll-match-absolute (keys (clojure.set/map-invert RLL-1)) "P")
+
+(defn rll-decode
+  "Dékóduje modulovaný string pomocí specifikované RLL tabulky
+  Vrací binární reprezentaci"
+  ([tabulka bin-string] (rll-decode (clojure.set/map-invert tabulka) bin-string nil))
+  ([tabulka string-rest ret]
+   (if (> (count string-rest) 0)
+     (let [temp-klic (rll-match-absolute (keys tabulka) string-rest)
+           mezi-klic (if (not= nil temp-klic)
+                       temp-klic
+                       (throw (ex-info
+                                 "Neplatná modulované sekvence"
+                                 {:zbyvajici-data string-rest
+                                  :uspesna-modulace ret})))]
+       (recur
+        tabulka
+        (if (and (not= (count mezi-klic) 0) (< (count mezi-klic) (count string-rest)))
+          (subs string-rest (count mezi-klic))
+          "") ;;Ukončí rekurzi v dalším kole
+        (str ret (tabulka mezi-klic))))
+     (nu/zkrat-na-byte ret))))
 
 ;;Komplet pravidla
 ;;0 = PN if předtím 00
