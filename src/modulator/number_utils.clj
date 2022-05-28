@@ -34,6 +34,20 @@
                   "0"))
         bin-str)))
 
+(defn bin-to-znak
+  "Převede binární znak na jeho ASCII reprezentaci"
+  [bin-znak]
+  (str (char (. Integer parseInt  bin-znak 2))))
+
+
+(defn bin-to-string
+  "Převede binární String do ASCII stringu"
+  [bin-str]
+  (apply str (map (fn
+                    [lst]
+                    (bin-to-znak (apply str lst)))
+                  (partition 8 bin-str))))
+
 (defn znak-to-bin
   "Převede znak na jeho binární ASCII reprezentaci ve formě stringu"
   [znak]
