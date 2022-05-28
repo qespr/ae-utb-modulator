@@ -2,22 +2,28 @@
 
 Jde o program který provádí FM, MFM a RLL modulace dat tak jak je vyžadováno předmětem __Architektura Počítačů__. Moduluje
 jakýkoliv ASCII string a má na výběr z obou verzí RLL modulace. Při sestavování ze zdroje si jednoduše můžete definovat svou
-vlastní tabulku RLL.
+vlastní tabulku RLL. Program v plné verzi bude umět převádět jak __z__ tak __do__ jednotlivých modulací, počítat jejich
+efektivitu a to vše bez limitu 5ti znaků který má oficiální kontrolní stránka. Cílem je možnost tento program použít jako přímou
+náhradu kontrolní stránky zamčené za univerzitní VPN.
 
-Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github
+Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github v každém případě půjde o plně soběstačný
+ZIP s .html souborem který vám pojede lokálně.
 
 - Postup kompletnosti
   - [x] FM modulace
   - [x] MFM modulace
   - [x] RLL1 modulace
   - [x] RLL2 modulace
-  - [x] Pokrytí testy
-  - [ ] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
+  - [ ] Pokrytí testy
+  - [x] Reverzní převod RLL
+  - [ ] Reverzní převod MFM
+  - [ ] Reverzní převod FM
   - [ ] Zachycení chyb (filtrovat ěščřžýáíéóúů a všechno mimo ASCII znaky)
-  - [ ] Reverzní převod?
+  - [ ] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
+  - [ ] Kompletní kontrola nad výstupem a převody
   - [ ] Přepsat zdroják do angličtiny?
   - [ ] Spočítat efektivitu každého převodu (počet pulzů na string)
-  - [ ] Online verze
+  - [ ] Online verze (možná bude v samostatném projektu)
 
 ## Instalace/použití
 

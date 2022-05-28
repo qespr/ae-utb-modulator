@@ -77,9 +77,9 @@
            mezi-klic (if (not= nil temp-klic)
                        temp-klic
                        (throw (ex-info
-                                 "Neplatná modulované sekvence"
-                                 {:zbyvajici-data string-rest
-                                  :uspesna-modulace ret})))]
+                               "Neplatná modulované sekvence"
+                               {:zbyvajici-data string-rest
+                                :uspesna-modulace ret})))]
        (recur
         tabulka
         (if (and (not= (count mezi-klic) 0) (< (count mezi-klic) (count string-rest)))
