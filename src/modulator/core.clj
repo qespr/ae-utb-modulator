@@ -49,7 +49,7 @@
      (recur
       tabulka
       (if (< (count mezi-klic) (count string-rest))
-        (subs string-rest (count mezi-klic)) ;;Pokračuje v rekzurzi protože je pořád co převádět
+        (subs string-rest (count mezi-klic)) ;;Pokračuje protože je pořád co převádět
         "") ;;Ukončí rekurzy v dalším kole
       (str ret (tabulka mezi-klic))))
      ret)))
@@ -109,6 +109,13 @@
                "PN"
                "NN"))))
      ret)))
+
+(defn fm-decode
+  "Dékoduje text pomocí FM modulace. Vrací binární reprezentaci"
+  [fm-text]
+  (cstr/replace
+   (cstr/replace fm-text #"PN" "0")
+   #"PP" "1"))
 
 (defn fm-encode
   "Zakóduje text pomocí FN modulace"
