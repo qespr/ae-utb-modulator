@@ -79,7 +79,7 @@
                        (throw (ex-info
                                "Neplatná modulované sekvence"
                                {:zbyvajici-data string-rest
-                                :uspesna-modulace ret})))]
+                                :uspesna-demodulace ret})))]
        (recur
         tabulka
         (if (and (not= (count mezi-klic) 0) (< (count mezi-klic) (count string-rest)))
@@ -87,6 +87,30 @@
           "") ;;Ukončí rekurzi v dalším kole
         (str ret (tabulka mezi-klic))))
      (nu/zkrat-na-byte ret))))
+
+(defn mfm-decode
+  "Dékoduje MFM modulovaný text, vrací binární string. V případě neplatné modulace vyhodí vyjímku"
+  ;;Kvůli konfliktům nelze řešit jen pomocí string-replace
+  ;;Todo: Přemýšlel jsem že bych funkci ukončil hned po zjištění že délka mfm-textu
+  ;;      není sudá. Avšak program kontrolní program také převádí všechno dokud nenarazí
+  ;;      na chybu takže sem se rozhodl tento průběh mimikovat.
+  ([mfm-text] (mfm-decode mfm-text nil))
+  ([mfm-text ret]
+   (cond
+     (>= (count mfm-text) 2) (let [cast (subs mfm-text 0 2)
+                                   zbytek (subs mfm-text 2)]
+                               (recur zbytek
+                                      (str ret
+                                           (if
+                                               (or (= cast "PN")
+                                                   (= cast "NN"))
+                                             "0"
+                                             "1"))))
+     (= (count mfm-text) 1) (throw (ex-info
+                                    "Nekompletní modulace!"
+                                    {:prebyvajici-data mfm-text
+                                     :uspesna-demodulace ret}))
+     :else ret)))
 
 ;;Komplet pravidla
 ;;0 = PN if předtím 00
