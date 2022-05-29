@@ -151,6 +151,18 @@
   [modulovany-string]
   ((frequencies modulovany-string) \P))
 
+(defn print-help
+  "Vypíše nápovědu"
+  []
+  (println "Základní použití:")
+  (println "modulator [text] - Vypíše všechny modulované verze [text]u, pokud text obsahuje mezery je nutné jej dát do \"uvozovek\"")
+  (println "V tomto případě vypíše, počet půlzů, převod do všech modulací + binární reprezentaci textu")
+  (println "Pokročilé možnosti:")
+  (println "-e [text] - Text k modulování")
+  (println "-d [modulovaný text] - text k demodulování, je potřeba upřesnit o jakou modulaci se jedná pomocí -t")
+  (println "-t {fm, mfm, rll1, rll2} - Specifikuje o jaký typ modulace se jedná (při -d) nebo jaká se žádá (při -e)")
+  (println "-q - Tichý režim, jen vypsat modulaci/demodulaci bez statistik a dalších převodů"))
+
 (defn -main
   "Vstupní bod, bere 1 argument - text k modulaci"
   [& args]
