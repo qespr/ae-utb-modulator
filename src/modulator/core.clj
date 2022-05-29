@@ -91,9 +91,6 @@
 (defn mfm-decode
   "Dékoduje MFM modulovaný text, vrací binární string. V případě neplatné modulace vyhodí vyjímku"
   ;;Kvůli konfliktům nelze řešit jen pomocí string-replace
-  ;;Todo: Přemýšlel jsem že bych funkci ukončil hned po zjištění že délka mfm-textu
-  ;;      není sudá. Avšak program kontrolní program také převádí všechno dokud nenarazí
-  ;;      na chybu takže sem se rozhodl tento průběh mimikovat.
   ([mfm-text] (mfm-decode mfm-text nil))
   ([mfm-text ret]
    (cond
@@ -148,6 +145,12 @@
    (cstr/replace bin-text #"0" "PN")
    #"1" "PP"))
 
+(defn get-efektivita
+  "Vrátí počet impulzů v modulovaném stringu
+  čímž se vyjadřuje efektivita zakódování"
+  [modulovany-string]
+  ((frequencies modulovany-string) \P))
+
 (defn -main
   "Vstupní bod, bere 1 argument - text k modulaci"
   [& args]
@@ -162,6 +165,10 @@
     (println "Text: " (first args))
     (println "   Bin: " text-bin)
     (println "    FM: " text-fm)
+    (println " Pulzu: " (get-efektivita text-fm))
     (println "   MFM: " text-mfm)
+    (println " Pulzu: " (get-efektivita text-mfm))
     (println " RLL-1: " text-rll1)
-    (println " RLL-2: " text-rll2)))
+    (println " Pulzu: " (get-efektivita text-rll1))
+    (println " RLL-2: " text-rll2)
+    (println " Pulzu: " (get-efektivita text-rll2))))
