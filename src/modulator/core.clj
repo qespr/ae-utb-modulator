@@ -161,20 +161,18 @@
   (println "-e [text] - Text k modulování")
   (println "-d [modulovaný text] - text k demodulování, je potřeba upřesnit o jakou modulaci se jedná pomocí -t")
   (println "-t {fm, mfm, rll1, rll2} - Specifikuje o jaký typ modulace se jedná (při -d) nebo jaká se žádá (při -e)")
-  (println "-q - Tichý režim, jen vypsat modulaci/demodulaci bez statistik a dalších převodů"))
+  (println "-q - Tichý režim, jen vypsat modulaci/demodulaci bez statistik a dalších převodů, funguje pouze pokud je použit '-t'")
+  (println "Každé další opakování jakékoliv možnosti přepíše tu předchozí (-t fm -t mfm => platí pouze '-t mfm'"))
 
-(defn -main
-  "Vstupní bod, bere 1 argument - text k modulaci"
-  [& args]
-  (when (= nil args)
-    (println "Použití: modulator [text k převedení]")
-    (System/exit 1))
-  (let [text-bin (nu/text-to-bin (first args))
+(defn do-everything
+  "Provede všechny dostupné modulace"
+  [text]
+  (let [text-bin (nu/text-to-bin text)
         text-fm (fm-encode text-bin)
         text-mfm (mfm-encode text-bin)
         text-rll1 (rll-encode RLL-1 text-bin)
         text-rll2 (rll-encode RLL-2 text-bin)]
-    (println "Text: " (first args))
+    (println "Text: " text)
     (println "   Bin: " text-bin)
     (println "    FM: " text-fm)
     (println " Pulzu: " (get-efektivita text-fm))
