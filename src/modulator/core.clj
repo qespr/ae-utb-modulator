@@ -156,7 +156,7 @@
   []
   (println "Základní použití:")
   (println "modulator [text] - Vypíše všechny modulované verze [text]u, pokud text obsahuje mezery je nutné jej dát do \"uvozovek\"")
-  (println "V tomto případě vypíše, počet půlzů, převod do všech modulací + binární reprezentaci textu")
+  (println "V tomto případě vypíše, počet pulzů, převod do všech modulací + binární reprezentaci textu")
   (println "Pokročilé možnosti:")
   (println "-e [text] - Text k modulování")
   (println "-d [modulovaný text] - text k demodulování, je potřeba upřesnit o jakou modulaci se jedná pomocí -t")
@@ -182,3 +182,74 @@
     (println " Pulzu: " (get-efektivita text-rll1))
     (println " RLL-2: " text-rll2)
     (println " Pulzu: " (get-efektivita text-rll2))))
+
+(defn print-info
+  "Zavolá funkci na text a podle módu vypíše další statistiky"
+  [f mode text demod]
+  (let [text-prep (if demod text (nu/text-to-bin text))
+        text-done (try
+                    (f text-prep)
+                    (catch Exception e
+                      (let [data (ex-data e)]
+                        (println "Chyba při zpracování: " (ex-message e))
+                        (println "Úspěšná část převádění: " (:uspesna-demodulace data))
+                        (println "Neplatná data: " (:zbyvajici-data data)))
+                      (System/exit 0)))
+        text-stats (get-efektivita text-done)]
+    (println (if demod (nu/bin-to-string text-done) text-done))
+    (when (not mode) ;;Není tichý režim takže tiskneme i podrobnosti
+      (println "Vstup: " text)
+      (if demod
+          (println "Binárně: " text-done)
+          (do
+            (println "Binárně: " text-prep)
+            (println "Pulzu: " text-stats))))))
+
+
+(defn proved-zadanou-akci
+  "Provede žádanou modulaci/demodulaci, vypíše do stdout"
+  [tise druh demoduluj text]
+  (let [druh-small (cstr/lower-case druh)
+        rll-helper (fn
+                     ;; Bere funkci a argument, vrací funkci která zaovlá danou funkci a bere argument
+                     [rll tabulka]
+                     (fn [text] (rll tabulka text)))]
+  (condp = druh-small
+    "fm" (if demoduluj (print-info fm-decode tise text demoduluj) (print-info fm-encode tise text demoduluj))
+    "mfm" (if demoduluj (print-info mfm-decode tise text demoduluj) (print-info mfm-encode tise text demoduluj))
+    ;;Já vím že je to prakticky jen copypaste ale mě už se nad tím nechce přemýšlet
+    "rll1" (if demoduluj (print-info (rll-helper rll-decode RLL-1) tise text demoduluj) (print-info (rll-helper rll-encode RLL-1) tise text demoduluj))
+    "rll2" (if demoduluj (print-info (rll-helper rll-decode RLL-2) tise text demoduluj) (print-info (rll-helper rll-encode RLL-2) tise text demoduluj))
+    (println "'" druh "'  je nepodporovaná modulace, program umí jen {FM, MFM, RLL1, RLL2}"))))
+
+(defn zpracuj-argy
+  "Zpracuje všechny argumenty"
+  ([args] (zpracuj-argy args false nil false nil))
+  ([args tichy-rezim druh-modulace demoduluju text]
+   ;;porovnám hlavu, pokud je jedn z možný možností
+   ;;provedu akci a zavolám zbovu se zbytkem
+   ;;musí mít default
+   (let [option (first args)
+         arg (nth args 1 nil)
+         ;;I don't really know any better solution to rest rest
+         args-drest (rest (rest args))]
+
+     (condp = option
+       ;;Princip je že opakuji volání dokud nedojdou argy a na místě každé možnosti mám
+       ;;Pevně danou hodnotu která přepisuje předchozí - byla-li tam
+       "-q" (recur (rest args) true druh-modulace demoduluju text)
+       "-d" (recur args-drest tichy-rezim druh-modulace true arg)
+       "-e" (recur args-drest tichy-rezim druh-modulace false arg)
+       "-t" (recur args-drest tichy-rezim arg demoduluju text)
+       (proved-zadanou-akci tichy-rezim druh-modulace demoduluju text)))))
+
+(defn -main
+  "Vstupní bod, bere 1 argument - text k modulaci"
+  [& args]
+  (when (= nil args)
+    (print-help)
+    (System/exit 0))
+  (when (= (count args) 1)
+    (do-everything (first args))
+    (System/exit 0))
+  (zpracuj-argy args))

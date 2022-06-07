@@ -19,8 +19,9 @@ ZIP s .html souborem který vám pojede lokálně.
   - [x] Reverzní převod MFM
   - [x] Reverzní převod FM
   - [ ] Zachycení chyb (Omezit na rozsah ASCII tabulky)
-  - [ ] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
-  - [ ] Kompletní kontrola nad výstupem a převody
+  - [ ] Detekovat když se někdo snaží demodulovat nemoduloavný text (frequencies)
+  - [x] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
+  - [x] Kompletní kontrola nad výstupem a převody
   - [ ] Přepsat zdroják do angličtiny?
   - [x] Spočítat efektivitu každého převodu (počet pulzů na string)
   - [ ] Online verze (možná bude v samostatném projektu)
@@ -40,8 +41,6 @@ ZIP s .html souborem který vám pojede lokálně.
 3. Online verze (dobře to není úplně instalace)
    - Asi by to teoreticky šlo narvat do nějakého online interpreteru
    - Později to můžu zkusit podporovat
-4. Emacs
-   - Možná bude Elisp verze, pokud se na to nevyseru (pravděpodobně se na to vyseru)
 
 ## Ukázky
 
