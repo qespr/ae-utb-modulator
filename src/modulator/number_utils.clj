@@ -51,9 +51,21 @@
 (defn znak-to-bin
   "Převede znak na jeho binární ASCII reprezentaci ve formě stringu"
   [znak]
-  (zarovnej-na-byte (do-binarky (int znak))))
+  (let [znak-hodnota (int znak)]
+    (when
+        ;;Magické čísla jsou rozsah všech tisknutelných ASCII znaků
+        (not (<= 32 znak-hodnota 126))
+      (throw (ex-info (str "Znak: '" znak "' je mimo rozsah základní ASCII a nelze jej modulovat")
+                      {:kod-znaku znak-hodnota
+                       :platny-rozsah-znaku '(32 1256)})))
+  (zarovnej-na-byte (do-binarky znak-hodnota))))
 
 (defn text-to-bin
   "Převede string na jeho binární ASCII reprezentaci"
   [text]
-  (apply str (map znak-to-bin text)))
+  (try (apply str (map znak-to-bin text))
+       (catch Exception e
+         (println "Chyba při převodu textu na binární reprezentaci: " (ex-message e))
+         (println "Další info: " (ex-data e))
+         (System/exit 1))))
+

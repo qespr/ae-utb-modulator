@@ -18,11 +18,11 @@ ZIP s .html souborem který vám pojede lokálně.
   - [x] Reverzní převod RLL
   - [x] Reverzní převod MFM
   - [x] Reverzní převod FM
-  - [ ] Zachycení chyb (Omezit na rozsah ASCII tabulky)
+  - [x] Zachycení chyb (Omezit na rozsah ASCII tabulky)
   - [ ] Detekovat když se někdo snaží demodulovat nemoduloavný text (frequencies)
   - [x] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
   - [x] Kompletní kontrola nad výstupem a převody
-  - [ ] Přepsat zdroják do angličtiny?
+  - [-] Přepsat zdroják do angličtiny?
   - [x] Spočítat efektivitu každého převodu (počet pulzů na string)
   - [ ] Online verze (možná bude v samostatném projektu)
 
