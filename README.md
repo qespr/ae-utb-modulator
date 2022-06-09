@@ -85,7 +85,10 @@ Smart
 
 ## Známé Bugy
 
-- Zatím žádné
+- Když specifikujete ``-e`` ale ne ``-t`` program spadne
+  - Řešení: Nedělejte to, prostě nedávejte žádný argument a dostanete všechny typy
+- Když specifikujete ``-q`` ale už nepřidáte ``-t`` a ``-e`` program spadne
+  - Řešení: Nedělejte to, buď chcete -q nebo ne, -q je neplatné pro výpis všeho
 
 ## License
 
