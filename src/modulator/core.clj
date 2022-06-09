@@ -205,24 +205,28 @@
             (println "Binárně: " text-prep)
             (println "Pulzu: " text-stats))))))
 
-
 (defn proved-zadanou-akci
-  "Provede žádanou modulaci/demodulaci, vypíše do stdout"
+  "Provede žádanou modulaci/demodulaci"
   [tise druh demoduluj text]
-  (let [druh-small (cstr/lower-case druh)
+  (let [druh-small (try (cstr/lower-case druh)
+                        (catch NullPointerException ne!
+                          (println (if tise
+                                     "Argument -q funguje pouze pokud je je daný '-d' nebo '-e' a '-t'"
+                                     "Vždy musí být alespoň '-d' nebo '-e' A -'t'"))
+                          (System/exit 1)))
         rll-helper (fn
                      ;; Bere funkci a argument, vrací funkci která zaovlá danou funkci a bere argument
                      [rll tabulka]
                      (fn [text] (rll tabulka text)))]
-  (condp = druh-small
-    "fm" (if demoduluj (print-info fm-decode tise text demoduluj) (print-info fm-encode tise text demoduluj))
-    "mfm" (if demoduluj (print-info mfm-decode tise text demoduluj) (print-info mfm-encode tise text demoduluj))
-    ;;Já vím že je to prakticky jen copypaste ale mě už se nad tím nechce přemýšlet
-    ;;Todo: Pokud se někdy někomu bude chtít tak to jde hodně lehce zkrátit přesunutím toho ifu,
-    ;;je vidět že můj mozek je furt těžce imperativní
-    "rll1" (if demoduluj (print-info (rll-helper rll-decode RLL-1) tise text demoduluj) (print-info (rll-helper rll-encode RLL-1) tise text demoduluj))
-    "rll2" (if demoduluj (print-info (rll-helper rll-decode RLL-2) tise text demoduluj) (print-info (rll-helper rll-encode RLL-2) tise text demoduluj))
-    (println "'" druh "'  je nepodporovaná modulace, program umí jen {FM, MFM, RLL1, RLL2}"))))
+    (condp = druh-small
+      "fm" (if demoduluj (print-info fm-decode tise text demoduluj) (print-info fm-encode tise text demoduluj))
+      "mfm" (if demoduluj (print-info mfm-decode tise text demoduluj) (print-info mfm-encode tise text demoduluj))
+      ;;Já vím že je to prakticky jen copypaste ale mě už se nad tím nechce přemýšlet
+      ;;Todo: Pokud se někdy někomu bude chtít tak to jde hodně lehce zkrátit přesunutím toho ifu,
+      ;;je vidět že můj mozek je furt těžce imperativní
+      "rll1" (if demoduluj (print-info (rll-helper rll-decode RLL-1) tise text demoduluj) (print-info (rll-helper rll-encode RLL-1) tise text demoduluj))
+      "rll2" (if demoduluj (print-info (rll-helper rll-decode RLL-2) tise text demoduluj) (print-info (rll-helper rll-encode RLL-2) tise text demoduluj))
+      (println "'" druh "'  je nepodporovaná modulace, program umí jen {FM, MFM, RLL1, RLL2}"))))
 
 (defn lze-demodulovat
   "Vrátí true pokud je string modulovatelný (neobsahuje nic než N a P)"
