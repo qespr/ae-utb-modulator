@@ -1,10 +1,12 @@
 # AE Modulator
 
-Jde o program který provádí FM, MFM a RLL modulace dat tak jak je vyžadováno předmětem __Architektura Počítačů__. Moduluje
+Jde o program který provádí obousměrné FM, MFM a RLL modulace dat tak jak je vyžadováno předmětem __Architektura Počítačů__. Moduluje
 jakýkoliv ASCII string a má na výběr z obou verzí RLL modulace. Při sestavování ze zdroje si jednoduše můžete definovat svou
-vlastní tabulku RLL. Program v plné verzi bude umět převádět jak __z__ tak __do__ jednotlivých modulací, počítat jejich
-efektivitu a to vše bez limitu 5ti znaků který má oficiální kontrolní stránka. Cílem je možnost tento program použít jako přímou
-náhradu kontrolní stránky zamčené za univerzitní VPN.
+vlastní tabulku RLL.
+
+Program nemá limit na počet znaků a upozorňuje na chyby v chybné části modulace pro případ že by jste jej využívaly jen pro
+kontrolu. __NERUČÍM ZA SPRÁVNOST__ - Program je samozřejmě testován a je funkční, nicméně vždy doporučuji kontrolu přes
+univerzitní stránku a případné neshody nahlásit.
 
 Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github, v každém případě půjde o plně soběstačný
 ZIP s .html souborem který vám pojede lokálně.
@@ -22,31 +24,45 @@ ZIP s .html souborem který vám pojede lokálně.
   - [x] Detekovat když se někdo snaží demodulovat nemodulovaný text
   - [x] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
   - [x] Kompletní kontrola nad výstupem a převody
-  - [ ] Přepsat zdroják do angličtiny?
   - [x] Spočítat efektivitu každého převodu (počet pulzů na string)
-  - [ ] Online verze (možná bude v samostatném projektu)
-  - [ ] Kompletní README
+  - [ ] Online verze (bude v samostatném projektu a zde link)
+  - [x] Kompletní README
 
 ## Instalace/použití
 
 1. Ze zdroje
-   - Nainstalujte si nějakou javu
+   - Nainstalujte si nějakou Javu 8+
    - Nainstalujte si clojure
-   - Nainstalujte is leiningen
+   - Nainstalujte is leiningen (nebo si to sestavte manuálně ale to vám popisovat nebudu)
    - Naklonujte si repo ``git clone git@github.com:qespr/ae-utb-modulator.git``
    - Přejděte do složky ``cd ae-utb-modulator`` a spustit pomocí leiningen: ``lein run [váš text]``
 2. Předsestavené
    - Stáhněte si binárku ze stránky [vydání](https://github.com/qespr/ae-utb-modulator/releases)
    - Otevřete terminál tam kde jste to stáhli
    - Pomocí ``$ java -jar utb-modulator-1.0.jar [vas text]"`` získáte na standartním výstupu všechny převody
-3. Online verze (dobře to není úplně instalace)
-   - Asi by to teoreticky šlo narvat do nějakého online interpreteru
-   - Později to můžu zkusit podporovat
+   - Pro další možnosti výstupu přejděte do další sekce
+3. Online verze - ZATÍM NENÍ
+   - Asi by to teoreticky šlo narvat do nějakého online interpreteru (gl hf)
+   - Bude online verze v Clojure scriptu
+
+## Možnosti výstupu z nápovědy
+
+Základní použití:
+modulator [text] - Vypíše všechny modulované verze [text]u, pokud text obsahuje mezery je nutné jej dát do "uvozovek"
+V tomto případě vypíše, počet pulzů, převod do všech modulací + binární reprezentaci textu
+
+Pokročilé možnosti:
+-e [text] - Text k modulování
+-d [modulovaný text] - text k demodulování, je potřeba upřesnit o jakou modulaci se jedná pomocí -t
+-t {fm, mfm, rll1, rll2} - Specifikuje o jaký typ modulace se jedná (při -d) nebo jaká se žádá (při -e)
+-q - Tichý režim, jen vypsat modulaci/demodulaci bez statistik a dalších převodů, funguje pouze pokud je použit '-t'
+
+Každé další opakování jakékoliv možnosti přepíše tu předchozí (-t fm -t mfm => platí pouze '-t mfm'
 
 ## Ukázky
 
 ```
-$ java -jar utb-modulator-1.0.jar Luna
+$ java -jar utb-modulator-1.3.jar Luna
 Text:  Luna
    Bin:  01001100011101010110111001100001
     FM:  PNPPPNPNPPPPPNPNPNPPPPPPPNPPPNPPPNPPPPPNPPPPPPPNPNPPPPPNPNPNPNPP
@@ -57,12 +73,19 @@ Text:  Luna
  Pulzu:  14
  RLL-2:  PNNPNNNNPNNNNNNPNNPNNNNPNNNPNNNPNNPNNNNNPNNNNPNNNNPNNNNNNPNNPNNPNN
  Pulzu:  15
+$ java -jar utb-modulator-1.3.jar -e Purple -t rll1
+NPNNNPNNPNNNPNNNNPNNNNPNNPNNNPNNNPNNNNNNPNNNNNPNNNNNNPNNPNNNPNNNNPNNPNNPNNNNPNNNNPNNNNPNNNPNNPNN
+Vstup:  Purple
+Binárně:  010100000111010101110010011100000110110001100101
+Pulzu:  22
+$
+$ java -jar utb-modulator-1.3.jar -q -t rll2 -e PNNPNNNPNNNNPNNNNNPNNNNNPNNNPNNPNNPNNNNNNPNNPNNPNNPNNNNPNNPNNPNNNNPNNNNPNNNPNNNNNPNN
+Smart
 ```
 
-### Bugs
+## Známé Bugy
 
-- Bug: Pokud vložíte něco mimo ASCII tak to vyplivne úplný bordel
-  - Řešení: Nedělejte to
+- Zatím žádné
 
 ## License
 
