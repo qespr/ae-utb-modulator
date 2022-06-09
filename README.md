@@ -6,7 +6,7 @@ vlastní tabulku RLL. Program v plné verzi bude umět převádět jak __z__ tak
 efektivitu a to vše bez limitu 5ti znaků který má oficiální kontrolní stránka. Cílem je možnost tento program použít jako přímou
 náhradu kontrolní stránky zamčené za univerzitní VPN.
 
-Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github v každém případě půjde o plně soběstačný
+Online verze se připravuje ale asi vám ji hostovat nebudu, možná ji bude hostovat github, v každém případě půjde o plně soběstačný
 ZIP s .html souborem který vám pojede lokálně.
 
 - Postup kompletnosti
@@ -19,12 +19,13 @@ ZIP s .html souborem který vám pojede lokálně.
   - [x] Reverzní převod MFM
   - [x] Reverzní převod FM
   - [x] Zachycení chyb (Omezit na rozsah ASCII tabulky)
-  - [ ] Detekovat když se někdo snaží demodulovat nemoduloavný text (frequencies)
+  - [x] Detekovat když se někdo snaží demodulovat nemodulovaný text
   - [x] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
   - [x] Kompletní kontrola nad výstupem a převody
-  - [-] Přepsat zdroják do angličtiny?
+  - [ ] Přepsat zdroják do angličtiny?
   - [x] Spočítat efektivitu každého převodu (počet pulzů na string)
   - [ ] Online verze (možná bude v samostatném projektu)
+  - [ ] Kompletní README
 
 ## Instalace/použití
 

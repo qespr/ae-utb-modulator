@@ -218,27 +218,33 @@
     "fm" (if demoduluj (print-info fm-decode tise text demoduluj) (print-info fm-encode tise text demoduluj))
     "mfm" (if demoduluj (print-info mfm-decode tise text demoduluj) (print-info mfm-encode tise text demoduluj))
     ;;Já vím že je to prakticky jen copypaste ale mě už se nad tím nechce přemýšlet
+    ;;Todo: Pokud se někdy někomu bude chtít tak to jde hodně lehce zkrátit přesunutím toho ifu,
+    ;;je vidět že můj mozek je furt těžce imperativní
     "rll1" (if demoduluj (print-info (rll-helper rll-decode RLL-1) tise text demoduluj) (print-info (rll-helper rll-encode RLL-1) tise text demoduluj))
     "rll2" (if demoduluj (print-info (rll-helper rll-decode RLL-2) tise text demoduluj) (print-info (rll-helper rll-encode RLL-2) tise text demoduluj))
     (println "'" druh "'  je nepodporovaná modulace, program umí jen {FM, MFM, RLL1, RLL2}"))))
+
+(defn lze-demodulovat
+  "Vrátí true pokud je string modulovatelný (neobsahuje nic než N a P)"
+  [text]
+  (= 2 (count (keys (frequencies text)))))
 
 (defn zpracuj-argy
   "Zpracuje všechny argumenty"
   ([args] (zpracuj-argy args false nil false nil))
   ([args tichy-rezim druh-modulace demoduluju text]
-   ;;porovnám hlavu, pokud je jedn z možný možností
-   ;;provedu akci a zavolám zbovu se zbytkem
-   ;;musí mít default
    (let [option (first args)
          arg (nth args 1 nil)
          ;;I don't really know any better solution to rest rest
          args-drest (rest (rest args))]
-
      (condp = option
        ;;Princip je že opakuji volání dokud nedojdou argy a na místě každé možnosti mám
        ;;Pevně danou hodnotu která přepisuje předchozí - byla-li tam
        "-q" (recur (rest args) true druh-modulace demoduluju text)
-       "-d" (recur args-drest tichy-rezim druh-modulace true arg)
+       "-d" (if (lze-demodulovat arg) (recur args-drest tichy-rezim druh-modulace true arg)
+                (do
+                  (println "Daný text: '" arg "' není validní modulovaný text (obsahuje jiné znaky než P a N)")
+                  (System/exit 1)))
        "-e" (recur args-drest tichy-rezim druh-modulace false arg)
        "-t" (recur args-drest tichy-rezim arg demoduluju text)
        (proved-zadanou-akci tichy-rezim druh-modulace demoduluju text)))))
