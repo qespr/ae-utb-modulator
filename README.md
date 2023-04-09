@@ -25,7 +25,7 @@ ZIP s .html souborem který vám pojede lokálně.
   - [x] Základní možnosti výstupu (možnost vyžádat si jen jednu konverzi)
   - [x] Kompletní kontrola nad výstupem a převody
   - [x] Spočítat efektivitu každého převodu (počet pulzů na string)
-  - [ ] Online verze (bude v samostatném projektu a zde link)
+  - [ ] Online verze - Zatím ještě nefunkční,[vývoj zde](https://github.com/qespr/UTB-modulator-online)
   - [x] Kompletní README
 
 ## Instalace/použití
